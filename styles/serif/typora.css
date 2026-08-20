@@ -88,9 +88,11 @@ body,
 
 @media screen {
     #write {
-        top: 10mm !important;
-        max-width: 224mm;
-        box-shadow: 0 0 4mm 0 #a7bbc969;
+        /* Use a continuous editor canvas instead of an A4-like paper card. */
+        top: 0 !important;
+        max-width: none;
+        background-color: transparent;
+        box-shadow: none;
         padding-left: 20mm;
         padding-right: 20mm;
         padding-top: 15mm;
@@ -115,6 +117,15 @@ h2 {
     padding: 1.2mm 0;
 }
 
+/*
+ * Typora 1.14.9 wraps raw HTML in a positioned .md-htmlblock while editing,
+ * but exports the standalone image inside a plain paragraph. Give the export
+ * paragraph the same positioning context so the absolute offsets stay local.
+ */
+p:has(.avatar, img[alt="avatar"]) {
+    position: relative;
+}
+
 .avatar,
 img[alt="avatar"] {
     display: block;
@@ -131,4 +142,56 @@ blockquote {
 
 blockquote p {
     line-height: 1.5;
+}
+
+ul,
+ol {
+    list-style-position: outside;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+ul {
+    padding-left: 3mm;
+    padding-right: 1mm;
+}
+
+ol {
+    padding-left: 5mm;
+    padding-right: 1mm;
+}
+
+.typora-export #write ul,
+.typora-export #write ol {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.typora-export #write ul {
+    padding-left: 3mm;
+    padding-right: 1mm;
+}
+
+.typora-export #write ol {
+    padding-left: 5mm;
+    padding-right: 1mm;
+}
+
+@media print {
+
+    #write ul,
+    #write ol {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #write ul {
+        padding-left: 3mm;
+        padding-right: 1mm;
+    }
+
+    #write ol {
+        padding-left: 5mm;
+        padding-right: 1mm;
+    }
 }
